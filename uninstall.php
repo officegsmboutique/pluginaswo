@@ -6,7 +6,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 $options = array(
 	'aswo_customer_id',
-	'aswo_api_login',
+	'aswo_api_user',
 	'aswo_api_password',
 	'aswo_api_base_url',
 	'aswo_results_per_page',

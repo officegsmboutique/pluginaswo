@@ -6,11 +6,11 @@ if ( ! current_user_can( 'manage_options' ) ) {
 	return;
 }
 
-$api_login    = get_option( 'aswo_api_login', '' );
+$api_user     = get_option( 'aswo_api_user', '' );
 $customer_id  = get_option( 'aswo_customer_id', '' );
 $search_page  = absint( get_option( 'aswo_search_page_id', 0 ) );
 $cart_page    = absint( get_option( 'aswo_cart_page_id', 0 ) );
-$configured   = ! empty( $api_login ) && ! empty( $customer_id );
+$configured   = ! empty( $api_user ) && ! empty( $customer_id );
 ?>
 <div class="wrap aswo-settings-wrap">
 	<h1><?php esc_html_e( 'ASWO Parts Search & Order', 'pluginaswo' ); ?></h1>
