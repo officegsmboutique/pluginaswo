@@ -18,7 +18,7 @@ class ASWO_API {
 	private $session_token = null;
 
 	public function __construct() {
-		$this->base_url    = get_option( 'aswo_api_base_url', 'https://shop.euras.com/eed/' );
+		$this->base_url    = get_option( 'aswo_api_base_url', 'https://shop.euras.com/eed.php' );
 		$this->customer_id = get_option( 'aswo_customer_id', '' );
 	}
 
