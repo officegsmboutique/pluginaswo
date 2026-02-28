@@ -20,14 +20,6 @@ if ( ! current_user_can( 'manage_options' ) ) {
 				<td><input type="text" id="aswo_customer_id" name="aswo_customer_id" value="<?php echo esc_attr( get_option( 'aswo_customer_id' ) ); ?>" class="regular-text" /></td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="aswo_api_user"><?php esc_html_e( 'ASWO API User', 'pluginaswo' ); ?></label></th>
-				<td><input type="text" id="aswo_api_user" name="aswo_api_user" value="<?php echo esc_attr( get_option( 'aswo_api_user' ) ); ?>" class="regular-text" autocomplete="off" /></td>
-			</tr>
-			<tr>
-				<th scope="row"><label for="aswo_api_password"><?php esc_html_e( 'ASWO API Password', 'pluginaswo' ); ?></label></th>
-				<td><input type="password" id="aswo_api_password" name="aswo_api_password" value="<?php echo esc_attr( get_option( 'aswo_api_password' ) ); ?>" class="regular-text" autocomplete="new-password" /></td>
-			</tr>
-			<tr>
 				<th scope="row"><label for="aswo_api_base_url"><?php esc_html_e( 'API Base URL', 'pluginaswo' ); ?></label></th>
 				<td><input type="text" id="aswo_api_base_url" name="aswo_api_base_url" value="<?php echo esc_attr( get_option( 'aswo_api_base_url', 'https://shop.euras.com/eed/' ) ); ?>" class="regular-text" /></td>
 			</tr>

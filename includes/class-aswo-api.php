@@ -12,12 +12,6 @@ class ASWO_API {
 	private $base_url;
 
 	/** @var string */
-	private $user;
-
-	/** @var string */
-	private $password;
-
-	/** @var string */
 	private $customer_id;
 
 	/** @var string|null */
@@ -25,8 +19,6 @@ class ASWO_API {
 
 	public function __construct() {
 		$this->base_url    = get_option( 'aswo_api_base_url', 'https://shop.euras.com/eed/' );
-		$this->user        = get_option( 'aswo_api_user', '' );
-		$this->password    = get_option( 'aswo_api_password', '' );
 		$this->customer_id = get_option( 'aswo_customer_id', '' );
 	}
 
@@ -45,8 +37,8 @@ class ASWO_API {
 		$url = add_query_arg(
 			array(
 				'do'    => 'session',
-				'user'  => rawurlencode( $this->user ),
-				'pwd'   => rawurlencode( $this->password ),
+				'user'  => rawurlencode( $this->customer_id ),
+				'pwd'   => rawurlencode( $this->customer_id ),
 				'kid'   => rawurlencode( $this->customer_id ),
 			),
 			$this->base_url
