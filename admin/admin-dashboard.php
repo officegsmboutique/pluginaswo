@@ -75,6 +75,11 @@ $configured   = ! empty( $api_login ) && ! empty( $customer_id );
 					</a>
 				</li>
 				<li>
+					<a href="<?php echo esc_url( admin_url( 'admin.php?page=aswo-orders' ) ); ?>" class="button button-secondary">
+						<?php esc_html_e( 'Vezi Comenzi', 'pluginaswo' ); ?>
+					</a>
+				</li>
+				<li>
 					<a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=page' ) ); ?>" class="button button-secondary">
 						<?php esc_html_e( 'Creare Pagină Nouă', 'pluginaswo' ); ?>
 					</a>

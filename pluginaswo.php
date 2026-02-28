@@ -22,6 +22,7 @@ define( 'ASWO_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 require_once ASWO_PLUGIN_DIR . 'includes/class-aswo-api.php';
 require_once ASWO_PLUGIN_DIR . 'includes/class-aswo-cart.php';
+require_once ASWO_PLUGIN_DIR . 'includes/class-aswo-orders.php';
 require_once ASWO_PLUGIN_DIR . 'includes/class-aswo-shortcodes.php';
 require_once ASWO_PLUGIN_DIR . 'admin/class-aswo-admin.php';
 require_once ASWO_PLUGIN_DIR . 'public/class-aswo-public.php';
@@ -49,6 +50,7 @@ function aswo_activate() {
 			add_option( $key, $value );
 		}
 	}
+	ASWO_Orders::create_table();
 	flush_rewrite_rules();
 }
 

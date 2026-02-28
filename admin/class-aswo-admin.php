@@ -45,6 +45,15 @@ class ASWO_Admin {
 			'aswo-settings',
 			array( $this, 'render_settings_page' )
 		);
+
+		add_submenu_page(
+			'aswo-dashboard',
+			__( 'ASWO Comenzi', 'pluginaswo' ),
+			__( 'Comenzi', 'pluginaswo' ),
+			'manage_options',
+			'aswo-orders',
+			array( $this, 'render_orders_page' )
+		);
 	}
 
 	/**
@@ -88,7 +97,7 @@ class ASWO_Admin {
 	 * @param string $hook
 	 */
 	public function enqueue_scripts( $hook ) {
-		if ( ! in_array( $hook, array( 'toplevel_page_aswo-dashboard', 'aswo_page_aswo-settings' ), true ) ) {
+		if ( ! in_array( $hook, array( 'toplevel_page_aswo-dashboard', 'aswo_page_aswo-settings', 'aswo_page_aswo-orders' ), true ) ) {
 			return;
 		}
 		wp_enqueue_style(
@@ -125,6 +134,16 @@ class ASWO_Admin {
 			return;
 		}
 		include ASWO_PLUGIN_DIR . 'admin/admin-settings.php';
+	}
+
+	/**
+	 * Render the orders list page.
+	 */
+	public function render_orders_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		include ASWO_PLUGIN_DIR . 'admin/admin-orders.php';
 	}
 
 	/**
