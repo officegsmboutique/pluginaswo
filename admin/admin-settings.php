@@ -20,8 +20,8 @@ if ( ! current_user_can( 'manage_options' ) ) {
 				<td><input type="text" id="aswo_customer_id" name="aswo_customer_id" value="<?php echo esc_attr( get_option( 'aswo_customer_id' ) ); ?>" class="regular-text" /></td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="aswo_api_login"><?php esc_html_e( 'ASWO API Login / Username', 'pluginaswo' ); ?></label></th>
-				<td><input type="text" id="aswo_api_login" name="aswo_api_login" value="<?php echo esc_attr( get_option( 'aswo_api_login' ) ); ?>" class="regular-text" autocomplete="off" /></td>
+				<th scope="row"><label for="aswo_api_user"><?php esc_html_e( 'ASWO API User', 'pluginaswo' ); ?></label></th>
+				<td><input type="text" id="aswo_api_user" name="aswo_api_user" value="<?php echo esc_attr( get_option( 'aswo_api_user' ) ); ?>" class="regular-text" autocomplete="off" /></td>
 			</tr>
 			<tr>
 				<th scope="row"><label for="aswo_api_password"><?php esc_html_e( 'ASWO API Password', 'pluginaswo' ); ?></label></th>

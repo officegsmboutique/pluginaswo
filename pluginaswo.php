@@ -22,6 +22,7 @@ define( 'ASWO_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 require_once ASWO_PLUGIN_DIR . 'includes/class-aswo-api.php';
 require_once ASWO_PLUGIN_DIR . 'includes/class-aswo-cart.php';
+require_once ASWO_PLUGIN_DIR . 'includes/class-aswo-orders.php';
 require_once ASWO_PLUGIN_DIR . 'includes/class-aswo-shortcodes.php';
 require_once ASWO_PLUGIN_DIR . 'admin/class-aswo-admin.php';
 require_once ASWO_PLUGIN_DIR . 'public/class-aswo-public.php';
@@ -31,7 +32,7 @@ register_activation_hook( __FILE__, 'aswo_activate' );
 function aswo_activate() {
 	$defaults = array(
 		'aswo_customer_id'     => '',
-		'aswo_api_login'       => '',
+		'aswo_api_user'        => '',
 		'aswo_api_password'    => '',
 		'aswo_api_base_url'    => 'https://shop.euras.com/eed/',
 		'aswo_results_per_page' => 20,
@@ -49,6 +50,7 @@ function aswo_activate() {
 			add_option( $key, $value );
 		}
 	}
+	ASWO_Orders::create_table();
 	flush_rewrite_rules();
 }
 
@@ -62,6 +64,15 @@ function aswo_deactivate() {
 // Init plugin components
 add_action( 'plugins_loaded', 'aswo_init' );
 function aswo_init() {
+	// One-time migration: rename aswo_api_login → aswo_api_user.
+	$old_login = get_option( 'aswo_api_login' );
+	if ( false !== $old_login ) {
+		if ( '' === get_option( 'aswo_api_user', '' ) && '' !== $old_login ) {
+			update_option( 'aswo_api_user', $old_login );
+		}
+		delete_option( 'aswo_api_login' );
+	}
+
 	$shortcodes = new ASWO_Shortcodes();
 	$shortcodes->init();
 

@@ -288,11 +288,20 @@ class ASWO_Public {
 			wp_send_json_error( array( 'message' => $result->get_error_message() ) );
 		}
 
+		$aswo_order_id = isset( $result['order_id'] ) ? $result['order_id'] : '';
+		ASWO_Orders::save(
+			$order_data,
+			$cart->get_items(),
+			$cart->get_total(),
+			$aswo_order_id,
+			'completed'
+		);
+
 		$cart->clear_cart();
 		wp_send_json_success(
 			array(
 				'message'  => __( 'Comanda a fost plasată cu succes!', 'pluginaswo' ),
-				'order_id' => isset( $result['order_id'] ) ? $result['order_id'] : '',
+				'order_id' => $aswo_order_id,
 			)
 		);
 	}
