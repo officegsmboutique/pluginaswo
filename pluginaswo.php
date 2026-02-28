@@ -32,7 +32,7 @@ register_activation_hook( __FILE__, 'aswo_activate' );
 function aswo_activate() {
 	$defaults = array(
 		'aswo_customer_id'     => '',
-		'aswo_api_base_url'    => 'https://shop.euras.com/eed/',
+		'aswo_api_base_url'    => 'https://shop.euras.com/eed.php',
 		'aswo_results_per_page' => 20,
 		'aswo_currency'        => 'EUR',
 		'aswo_country_code'    => 'RO',
