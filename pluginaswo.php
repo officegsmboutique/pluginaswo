@@ -32,7 +32,7 @@ register_activation_hook( __FILE__, 'aswo_activate' );
 function aswo_activate() {
 	$defaults = array(
 		'aswo_customer_id'     => '',
-		'aswo_api_base_url'    => 'https://shop.euras.com/eed/',
+		'aswo_api_base_url'    => 'https://shop.euras.com/eed.php',
 		'aswo_results_per_page' => 20,
 		'aswo_currency'        => 'EUR',
 		'aswo_country_code'    => 'RO',
@@ -48,6 +48,11 @@ function aswo_activate() {
 			add_option( $key, $value );
 		}
 	}
+	// Migrate old base URL to corrected endpoint.
+	if ( get_option( 'aswo_api_base_url' ) === 'https://shop.euras.com/eed/' ) {
+		update_option( 'aswo_api_base_url', 'https://shop.euras.com/eed.php' );
+	}
+
 	ASWO_Orders::create_table();
 	flush_rewrite_rules();
 }

@@ -21,7 +21,7 @@ if ( ! current_user_can( 'manage_options' ) ) {
 			</tr>
 			<tr>
 				<th scope="row"><label for="aswo_api_base_url"><?php esc_html_e( 'API Base URL', 'pluginaswo' ); ?></label></th>
-				<td><input type="text" id="aswo_api_base_url" name="aswo_api_base_url" value="<?php echo esc_attr( get_option( 'aswo_api_base_url', 'https://shop.euras.com/eed/' ) ); ?>" class="regular-text" /></td>
+				<td><input type="text" id="aswo_api_base_url" name="aswo_api_base_url" value="<?php echo esc_attr( get_option( 'aswo_api_base_url', 'https://shop.euras.com/eed.php' ) ); ?>" class="regular-text" /></td>
 			</tr>
 		</table>
 
