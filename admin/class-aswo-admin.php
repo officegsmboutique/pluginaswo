@@ -15,16 +15,46 @@ class ASWO_Admin {
 	}
 
 	/**
-	 * Add Settings > ASWO Settings menu item.
+	 * Add top-level ASWO admin menu with Dashboard and Settings submenus.
 	 */
 	public function add_settings_page() {
-		add_options_page(
+		add_menu_page(
+			__( 'ASWO', 'pluginaswo' ),
+			__( 'ASWO', 'pluginaswo' ),
+			'manage_options',
+			'aswo-dashboard',
+			array( $this, 'render_dashboard_page' ),
+			'dashicons-cart',
+			56
+		);
+
+		add_submenu_page(
+			'aswo-dashboard',
+			__( 'ASWO Dashboard', 'pluginaswo' ),
+			__( 'Dashboard', 'pluginaswo' ),
+			'manage_options',
+			'aswo-dashboard',
+			array( $this, 'render_dashboard_page' )
+		);
+
+		add_submenu_page(
+			'aswo-dashboard',
 			__( 'ASWO Settings', 'pluginaswo' ),
-			__( 'ASWO Settings', 'pluginaswo' ),
+			__( 'Settings', 'pluginaswo' ),
 			'manage_options',
 			'aswo-settings',
 			array( $this, 'render_settings_page' )
 		);
+	}
+
+	/**
+	 * Render the dashboard overview page.
+	 */
+	public function render_dashboard_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		include ASWO_PLUGIN_DIR . 'admin/admin-dashboard.php';
 	}
 
 	/**
@@ -58,9 +88,15 @@ class ASWO_Admin {
 	 * @param string $hook
 	 */
 	public function enqueue_scripts( $hook ) {
-		if ( 'settings_page_aswo-settings' !== $hook ) {
+		if ( ! in_array( $hook, array( 'toplevel_page_aswo-dashboard', 'aswo_page_aswo-settings' ), true ) ) {
 			return;
 		}
+		wp_enqueue_style(
+			'aswo-admin',
+			ASWO_PLUGIN_URL . 'assets/css/aswo-admin.css',
+			array(),
+			ASWO_VERSION
+		);
 		wp_enqueue_script(
 			'aswo-admin',
 			ASWO_PLUGIN_URL . 'assets/js/aswo-admin.js',
