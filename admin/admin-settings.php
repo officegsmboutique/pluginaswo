@@ -22,8 +22,8 @@ if ( ! current_user_can( 'manage_options' ) ) {
 			<tr>
 				<th scope="row"><label for="aswo_api_password"><?php esc_html_e( 'API Password', 'pluginaswo' ); ?></label></th>
 				<td>
-					<input type="password" id="aswo_api_password" name="aswo_api_password" value="<?php echo esc_attr( get_option( 'aswo_api_password', '' ) ); ?>" class="regular-text" autocomplete="off" />
-					<p class="description"><?php esc_html_e( 'Conform documentației EED, parola poate fi diferită de Customer ID.', 'pluginaswo' ); ?></p>
+					<input type="password" id="aswo_api_password" name="aswo_api_password" value="" class="regular-text" autocomplete="off" />
+					<p class="description"><?php esc_html_e( 'Conform documentației EED, parola poate fi diferită de Customer ID. Lăsați gol pentru a păstra parola salvată.', 'pluginaswo' ); ?></p>
 				</td>
 			</tr>
 			<tr>
