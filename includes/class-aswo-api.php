@@ -14,12 +14,20 @@ class ASWO_API {
 	/** @var string */
 	private $customer_id;
 
+	/** @var string */
+	private $api_password;
+
+	/** @var string */
+	private $api_kid;
+
 	/** @var string|null */
 	private $session_token = null;
 
 	public function __construct() {
 		$this->base_url    = get_option( 'aswo_api_base_url', 'https://shop.euras.com/eed.php' );
 		$this->customer_id = get_option( 'aswo_customer_id', '' );
+		$this->api_password = get_option( 'aswo_api_password', '' );
+		$this->api_kid      = get_option( 'aswo_api_kid', '' );
 	}
 
 	/**
@@ -28,18 +36,25 @@ class ASWO_API {
 	 * @return string|WP_Error
 	 */
 	public function start_session() {
+		if ( empty( $this->customer_id ) ) {
+			return new WP_Error( 'aswo_missing_user', __( 'Lipsește ASWO Customer ID / user.', 'pluginaswo' ) );
+		}
+
 		$cached = get_transient( 'aswo_session_token' );
 		if ( $cached ) {
 			$this->session_token = $cached;
 			return $cached;
 		}
 
+		$password = '' !== $this->api_password ? $this->api_password : $this->customer_id;
+		$kid      = '' !== $this->api_kid ? $this->api_kid : $this->customer_id;
+
 		$url = add_query_arg(
 			array(
 				'do'    => 'session',
-				'user'  => rawurlencode( $this->customer_id ),
-				'pwd'   => rawurlencode( $this->customer_id ),
-				'kid'   => rawurlencode( $this->customer_id ),
+				'user'  => $this->customer_id,
+				'pwd'   => $password,
+				'kid'   => $kid,
 			),
 			$this->base_url
 		);
@@ -89,11 +104,11 @@ class ASWO_API {
 			array(
 				'do'      => 'search',
 				'session' => $session,
-				'q'       => rawurlencode( $query ),
+				'q'       => $query,
 				'limit'   => absint( $limit ),
 				'page'    => absint( $page ),
-				'lang'    => rawurlencode( get_option( 'aswo_language', 'en' ) ),
-				'country' => rawurlencode( get_option( 'aswo_country_code', 'RO' ) ),
+				'lang'    => get_option( 'aswo_language', 'en' ),
+				'country' => get_option( 'aswo_country_code', 'RO' ),
 			),
 			$this->base_url
 		);
@@ -121,7 +136,7 @@ class ASWO_API {
 		);
 		$args = array_merge( $defaults, $params );
 
-		$url = add_query_arg( array_map( 'rawurlencode', $args ), $this->base_url );
+		$url = add_query_arg( $args, $this->base_url );
 		return $this->do_request( $url );
 	}
 
@@ -141,9 +156,9 @@ class ASWO_API {
 			array(
 				'do'         => 'article',
 				'session'    => $session,
-				'article_no' => rawurlencode( $article_number ),
-				'lang'       => rawurlencode( get_option( 'aswo_language', 'en' ) ),
-				'country'    => rawurlencode( get_option( 'aswo_country_code', 'RO' ) ),
+				'article_no' => $article_number,
+				'lang'       => get_option( 'aswo_language', 'en' ),
+				'country'    => get_option( 'aswo_country_code', 'RO' ),
 			),
 			$this->base_url
 		);
@@ -168,8 +183,8 @@ class ASWO_API {
 			array(
 				'do'         => 'picture',
 				'session'    => $session,
-				'article_no' => rawurlencode( $article_number ),
-				'size'       => rawurlencode( $size ),
+				'article_no' => $article_number,
+				'size'       => $size,
 			),
 			$this->base_url
 		);
@@ -191,8 +206,8 @@ class ASWO_API {
 			array(
 				'do'      => 'suggest',
 				'session' => $session,
-				'q'       => rawurlencode( $query ),
-				'lang'    => rawurlencode( get_option( 'aswo_language', 'en' ) ),
+				'q'       => $query,
+				'lang'    => get_option( 'aswo_language', 'en' ),
 			),
 			$this->base_url
 		);
@@ -216,8 +231,8 @@ class ASWO_API {
 			array(
 				'do'      => 'appliance_search',
 				'session' => $session,
-				'q'       => rawurlencode( $query ),
-				'lang'    => rawurlencode( get_option( 'aswo_language', 'en' ) ),
+				'q'       => $query,
+				'lang'    => get_option( 'aswo_language', 'en' ),
 			),
 			$this->base_url
 		);
@@ -241,9 +256,9 @@ class ASWO_API {
 			array(
 				'do'           => 'appliance_articles',
 				'session'      => $session,
-				'appliance_id' => rawurlencode( $appliance_id ),
-				'lang'         => rawurlencode( get_option( 'aswo_language', 'en' ) ),
-				'country'      => rawurlencode( get_option( 'aswo_country_code', 'RO' ) ),
+				'appliance_id' => $appliance_id,
+				'lang'         => get_option( 'aswo_language', 'en' ),
+				'country'      => get_option( 'aswo_country_code', 'RO' ),
 			),
 			$this->base_url
 		);
@@ -268,7 +283,7 @@ class ASWO_API {
 			array(
 				'do'         => 'basket_add',
 				'session'    => $session,
-				'article_no' => rawurlencode( $article_no ),
+				'article_no' => $article_no,
 				'qty'        => absint( $quantity ),
 			),
 			$this->base_url
@@ -316,7 +331,7 @@ class ASWO_API {
 			array(
 				'do'         => 'basket_update',
 				'session'    => $session,
-				'article_no' => rawurlencode( $article_no ),
+				'article_no' => $article_no,
 				'qty'        => absint( $quantity ),
 			),
 			$this->base_url
@@ -341,7 +356,7 @@ class ASWO_API {
 			array(
 				'do'         => 'basket_remove',
 				'session'    => $session,
-				'article_no' => rawurlencode( $article_no ),
+				'article_no' => $article_no,
 			),
 			$this->base_url
 		);

@@ -20,6 +20,20 @@ if ( ! current_user_can( 'manage_options' ) ) {
 				<td><input type="text" id="aswo_customer_id" name="aswo_customer_id" value="<?php echo esc_attr( get_option( 'aswo_customer_id' ) ); ?>" class="regular-text" /></td>
 			</tr>
 			<tr>
+				<th scope="row"><label for="aswo_api_password"><?php esc_html_e( 'API Password', 'pluginaswo' ); ?></label></th>
+				<td>
+					<input type="password" id="aswo_api_password" name="aswo_api_password" value="<?php echo esc_attr( get_option( 'aswo_api_password', '' ) ); ?>" class="regular-text" autocomplete="off" />
+					<p class="description"><?php esc_html_e( 'Conform documentației EED, parola poate fi diferită de Customer ID.', 'pluginaswo' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="aswo_api_kid"><?php esc_html_e( 'API KID', 'pluginaswo' ); ?></label></th>
+				<td>
+					<input type="text" id="aswo_api_kid" name="aswo_api_kid" value="<?php echo esc_attr( get_option( 'aswo_api_kid', '' ) ); ?>" class="regular-text" />
+					<p class="description"><?php esc_html_e( 'Lăsați gol pentru fallback la Customer ID.', 'pluginaswo' ); ?></p>
+				</td>
+			</tr>
+			<tr>
 				<th scope="row"><label for="aswo_api_base_url"><?php esc_html_e( 'API Base URL', 'pluginaswo' ); ?></label></th>
 				<td><input type="text" id="aswo_api_base_url" name="aswo_api_base_url" value="<?php echo esc_attr( get_option( 'aswo_api_base_url', 'https://shop.euras.com/eed.php' ) ); ?>" class="regular-text" /></td>
 			</tr>

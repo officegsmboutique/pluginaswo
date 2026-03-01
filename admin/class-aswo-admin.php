@@ -72,6 +72,8 @@ class ASWO_Admin {
 	public function register_settings() {
 		$fields = array(
 			'aswo_customer_id'             => 'sanitize_text_field',
+			'aswo_api_password'            => 'sanitize_text_field',
+			'aswo_api_kid'                 => 'sanitize_text_field',
 			'aswo_api_base_url'            => 'esc_url_raw',
 			'aswo_results_per_page'        => 'absint',
 			'aswo_currency'                => 'sanitize_text_field',
