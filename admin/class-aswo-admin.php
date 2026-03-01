@@ -72,6 +72,8 @@ class ASWO_Admin {
 	public function register_settings() {
 		$fields = array(
 			'aswo_customer_id'             => 'sanitize_text_field',
+			'aswo_api_password'            => array( $this, 'sanitize_api_password' ),
+			'aswo_api_kid'                 => 'sanitize_text_field',
 			'aswo_api_base_url'            => 'esc_url_raw',
 			'aswo_results_per_page'        => 'absint',
 			'aswo_currency'                => 'sanitize_text_field',
@@ -87,6 +89,27 @@ class ASWO_Admin {
 		foreach ( $fields as $option => $sanitize_callback ) {
 			register_setting( 'aswo_settings_group', $option, array( 'sanitize_callback' => $sanitize_callback ) );
 		}
+	}
+
+
+	/**
+	 * Sanitize API password without exposing current value in the UI.
+	 *
+	 * If the field is submitted empty, keep the current saved password.
+	 *
+	 * @param string $value Submitted field value.
+	 * @return string
+	 */
+	public function sanitize_api_password( $value ) {
+		$value = is_string( $value ) ? wp_unslash( $value ) : '';
+		$value = trim( $value );
+
+		if ( '' === $value ) {
+			$current = get_option( 'aswo_api_password', '' );
+			return is_string( $current ) ? $current : '';
+		}
+
+		return sanitize_text_field( $value );
 	}
 
 	/**
